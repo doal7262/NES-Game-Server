@@ -1,0 +1,17 @@
+{
+  "name": "nes-game-server",
+  "description": "",
+  "main": "app.js",
+  "license": "ISC",
+  "homepage": "https://github.com/doal7262/NES-Game-Server",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.3.1"
+  }
+}
