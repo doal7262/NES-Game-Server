@@ -1,9 +1,10 @@
 {
   "name": "nes-game-server",
   "version": "1.0.0",
-  "description": "",
+  "description": "Testing phone to browswer capability",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,5 +21,6 @@
     "express": "^4.16.4",
     "jsnes": "^1.0.1",
     "socket.io": "^2.2.0"
-  }
+  },
+  "devDependencies": {}
 }
