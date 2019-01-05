@@ -19,8 +19,9 @@
   "homepage": "https://github.com/doal7262/NES-Game-Server#readme",
   "dependencies": {
     "express": "^4.16.4",
-    "jsnes": "^1.0.1",
-    "socket.io": "^2.2.0"
+    "jsnes": "file:NES-TEST/jsnes",
+    "socket.io": "^2.2.0",
+    "yarn": "^1.12.3"
   },
   "devDependencies": {}
 }
