@@ -277,6 +277,38 @@
     </script>
     <!-- HexGL Scripts -->
     <script src="js/phoneController.js"></script>
+		<style>
+         
+        body,html {
+          background:#ccc;
+          padding:0;
+          margin:0;
+          overflow:hidden;
+          font-family:georgia;
+          text-align:center;
+          color: #666;
+              width:100%;
+              height:100%;
+        }
+        h1 {color: #666	; }
+        a { color:skyblue }
+        canvas { pointer-events:none; }
+        #overlay{
+          position: absolute;
+          z-index: 9999;
+          top: 0;
+          left: 0;
+          width: 100%;
+        }
+           
+           #controller{
+              width:100%;
+              height:100%;
+              background: url('assests/img/nes-controller.png') repeat-x;
+              background-size:contain;
+           }
+      </style>
+
   </head>
   <body onload="init()">
     <p>
