@@ -20,6 +20,7 @@
   "dependencies": {
     "express": "^4.16.4",
     "jsnes": "file:NES-TEST/jsnes",
+    "nesnes": "file:nesnes",
     "socket.io": "^2.2.0",
     "yarn": "^1.12.3"
   },
