@@ -1,76 +1,366 @@
 <!DOCTYPE html>
-
 <html>
-<head>
+  <head>
+    <script type="text/javascript" src="build/nes.js"></script>
+    <script type="text/javascript">
+      var nes;
 
-	<meta charset="utf-8">
+      // buttons status update methods
 
-	<title>Smartphone Remote Control for Presentations | Tutorialzine Demo</title>
+      /**
+       *
+       */
+      function init() {
+        document.getElementById('loadROMButton').disabled = false;
+        document.getElementById('dumpROMButton').disabled = true;
+        document.getElementById('dumpRegButton').disabled = true;
+        document.getElementById('dumpRAMButton').disabled = true;
+        document.getElementById('dumpVRAMButton').disabled = true;
+        document.getElementById('dumpSPRRAMButton').disabled = true;
+        document.getElementById('stopButton').disabled = true;
+        document.getElementById('stepButton').disabled = true;
+        document.getElementById('resumeButton').disabled = true;
+      }
 
-	<meta name="apple-mobile-web-app-capable" content="yes" />
-	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+      /**
+       *
+       */
+      function ROMloaded() {
+        document.getElementById('loadROMButton').disabled = true;
+        document.getElementById('dumpROMButton').disabled = true;
+        document.getElementById('dumpRegButton').disabled = true;
+        document.getElementById('dumpRAMButton').disabled = true;
+        document.getElementById('dumpVRAMButton').disabled = true;
+        document.getElementById('dumpSPRRAMButton').disabled = true;
+        document.getElementById('stopButton').disabled = true;
+        document.getElementById('stepButton').disabled = true;
+        document.getElementById('resumeButton').disabled = true;
+      }
 
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+      /**
+       *
+       */
+      function NESran() {
+        document.getElementById('loadROMButton').disabled = true;
+        document.getElementById('dumpROMButton').disabled = true;
+        document.getElementById('dumpRegButton').disabled = true;
+        document.getElementById('dumpRAMButton').disabled = true;
+        document.getElementById('dumpVRAMButton').disabled = true;
+        document.getElementById('dumpSPRRAMButton').disabled = true;
+        document.getElementById('stopButton').disabled = false;
+        document.getElementById('stepButton').disabled = true;
+        document.getElementById('resumeButton').disabled = true;
+      }
 
-	<link type="text/css" rel="stylesheet" href="assets/css/styles.css" />
-	<link href='//fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+      /**
+       *
+       */
+      function NESstopped() {
+        document.getElementById('loadROMButton').disabled = true;
+        document.getElementById('dumpROMButton').disabled = false;
+        document.getElementById('dumpRegButton').disabled = false;
+        document.getElementById('dumpRAMButton').disabled = false;
+        document.getElementById('dumpVRAMButton').disabled = false;
+        document.getElementById('dumpSPRRAMButton').disabled = false;
+        document.getElementById('stopButton').disabled = true;
+        document.getElementById('stepButton').disabled = false;
+        document.getElementById('resumeButton').disabled = false;
+      }
 
-	<link rel="stylesheet" href="assets/revealjs/css/reveal.css">
-	<link rel="stylesheet" href="assets/revealjs/css/theme/black.css" id="theme">
-	
+      // 
 
-	<!-- controller style test -->
-	<style>
-	#controller{
-		width: 100%;
-		height: 100%;
-		background: url('assets/img/nes-controller.jpg') repeat-x;
-		background-size:contain;
-	}
-	</style>
+      /**
+       *
+       */
+      function loadRom() {
+        var url = document.getElementById('romList').selectedOptions[0].value;
 
-</head>
+        var request = new XMLHttpRequest();
+        request.responseType = 'arraybuffer';
 
-<body>
+        request.onload = function() {
+          putMessage('Loading done.');
+          run(request.response);
+        };
 
-	<form class="login">
-		<span>What's your secret key?</span>
-		<input type="text" placeholder="Please enter your secret key!"/>
-		<input type="submit" value="➡" />
-	</form>
+        request.onerror = function(e) {
+          putMessage('failed to load.');
+        };
 
-	<div class="reveal blurred">
-		<div class="slides">
-			<section data-background="assets/img/1.jpg">
-				<p>Experiment by <a class="tz-link" href="http://tutorialzine.com/2015/02/smartphone-remote-control-for-presentations/">tutorial<span>zine</span></a></p>
-				<p><small>Open this presentation on your computer and smartphone. <br>Transition by swiping or pressing keyboard keys.</small></p>
-			</section>
-			<section>
-				<section data-background="assets/img/2.jpg">Vertical Slide 1</section>
-				<section data-background="assets/img/3.jpg">Vertical Slide 2</section>
-				<section data-background="assets/img/4.jpg">Vertical Slide 3</section>
-			</section>
-			<section data-background="assets/img/5.jpg">Single Horizontal Slide 2</section>
-			<section>
-				<section data-background="assets/img/6.jpg">Vertical Slide 4</section>
-				<section data-background="assets/img/7.jpg">Vertical Slide 5</section>
-			</section>
-		</div>
-	</div>
+        request.open('GET', url, true);
+        request.send(null);
 
+        putMessage('')
+        putMessage('Loading rom image...')
+        ROMloaded();
+      }
 
-	<!-- Including the JS libraries that we use -->
-	<script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
+      /**
+       *
+       */
+      function run(buffer) {
+        try {
+          var rom = new NesJs.Rom(buffer);
+        } catch(e) {
+          putMessage('');
+          putMessage(e.toString());
+          return;
+        }
 
-	<!-- Reveal.js is for presentations -->
-	<script src="assets/revealjs/lib/js/head.min.js"></script>
-	<script src="assets/revealjs/js/reveal.js"></script>
+        putMessage('');
+        putMessage('Rom Header info');
+        putMessage(rom.header.dump());
 
-	<!-- Socket.io library -->
-	<script src="/socket.io/socket.io.js"></script>
+        nes = new NesJs.Nes();
 
-	<!-- Main JavaScript file -->
-	<script src="assets/js/script.js"></script>
+        nes.addEventListener('fps', function(fps) {
+          document.getElementById('fps').innerText = fps.toFixed(2);
+        });
 
-</body>
+        nes.setRom(rom);
+
+        nes.setDisplay(new NesJs.Display(document.getElementById('mainCanvas')));
+
+        try {
+          nes.setAudio(new NesJs.Audio());
+        } catch(e) {
+          putMessage('');
+          putMessage('Disables audio because this browser does not seems to support WebAudio.');
+        }
+
+        window.onkeydown = function(e) { nes.handleKeyDown(e); };
+        window.onkeyup = function(e) { nes.handleKeyUp(e); };
+
+        putMessage('');
+
+        putMessage('bootup.');
+        nes.bootup();
+
+        putMessage('runs.');
+        NESran();
+        nes.run();
+      }
+
+      // put message methods
+
+      /**
+       *
+       */
+      function putMessage(str) {
+        var area = document.getElementById('dump');
+        area.firstChild.appendData(str + '\n');
+        area.scrollTop = area.scrollHeight;
+      }
+
+      // push button handlers
+
+      /**
+       *
+       */
+      function pushDumpROM() {
+        putMessage(nes.dumpRom());
+      }
+
+      /**
+       *
+       */
+      function pushDumpReg() {
+        putMessage(nes.dumpCpu());
+        putMessage(nes.dumpPpu());
+      }
+
+      /**
+       *
+       */
+      function pushDumpRAM() {
+        putMessage(nes.dumpRam());
+      }
+
+      /**
+       *
+       */
+      function pushDumpVRAM() {
+        putMessage(nes.dumpVRam());
+      }
+
+      /**
+       *
+       */
+      function pushDumpSPRRAM() {
+        putMessage(nes.dumpSprRam());
+      }
+
+      /**
+       *
+       */
+      function pushStopButton() {
+        nes.stop();
+        putMessage('stopped.');
+        NESstopped();
+      }
+
+      /**
+       *
+       */
+      function pushStepButton() {
+        nes.runStep();
+        putMessage(nes.dumpCpu());
+      }
+
+      /**
+       *
+       */
+      function pushResumeButton() {
+        nes.resume();
+        putMessage('resumed.');
+        NESran();
+      }
+
+      // press/release pad button handlers
+
+      /**
+       *
+       */
+      function pressPadButton(key) {
+        if(nes === undefined)
+          return;
+
+        nes.pad1.pressButton(key);
+      }
+
+      /**
+       *
+       */
+      function releasePadButton(key) {
+        if(nes === undefined)
+          return;
+
+        nes.pad1.releaseButton(key);
+      }
+
+      // drag/drop handlers
+
+      /**
+       *
+       */
+      function dragOverHandler(e) {
+        e.preventDefault();
+      }
+
+      /**
+       *
+       */
+      function dropHandler(e) {
+        e.preventDefault();
+
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+          putMessage('Loading done.');
+          run(e.target.result);
+        };
+
+        reader.onerror = function(e) {
+          for(var key in reader.error) {
+            putMessage(key + '=' + reader.error[key]);
+          }
+        };
+
+        reader.readAsArrayBuffer(e.dataTransfer.files[0]);
+
+        putMessage('')
+        putMessage('Loading rom image...')
+      }
+
+      window.addEventListener('drop', dropHandler, false);
+      window.addEventListener('dragover', dragOverHandler, false);
+    </script>
+  </head>
+  <body onload="init()">
+    <p>
+      <select id="romList">
+        <option value="./roms/nestest.nes">nestest</option>
+        <option value="./roms/Sgt. Helmet - Training Day (2013)(The Mojon Twins)[!].nes" selected>Sgt. Helmet</option>
+        <option value="./roms/pong1k.nes">pong1k</option>
+        <option value="./roms/The Invasion.nes">The Invasion</option>
+        <option value="./roms/mguard.nes">mguard</option>
+      </select>
+      <button id="loadROMButton" onclick="loadRom()">load rom</button><br />
+      Select rom from the list or drag and drop your own rom into this window to start.
+    </p>
+
+    <p>
+      <canvas id="mainCanvas" width="256" height="240"
+              style="border:1px solid black; width:512px; height:480px;"></canvas>
+      <span id="fps"></span> fps
+    </p>
+
+    <div>
+      <table>
+        <tr>
+          <td></td>
+          <td><button id="pad1_4" onmousedown="pressPadButton(NesJs.Joypad.BUTTONS.UP)"
+                onclick="releasePadButton(NesJs.Joypad.BUTTONS.UP)">U</button></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td><button id="pad1_6" onmousedown="pressPadButton(NesJs.Joypad.BUTTONS.LEFT)"
+                onclick="releasePadButton(NesJs.Joypad.BUTTONS.LEFT)">L</button></td>
+          <td></td>
+          <td><button id="pad1_7" onmousedown="pressPadButton(NesJs.Joypad.BUTTONS.RIGHT)"
+                onclick="releasePadButton(NesJs.Joypad.BUTTONS.RIGHT)">R</button></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><button id="pad1_5" onmousedown="pressPadButton(NesJs.Joypad.BUTTONS.DOWN)"
+                onclick="releasePadButton(NesJs.Joypad.BUTTONS.DOWN)">D</button></td>
+          <td></td>
+          <td><button id="pad1_2" onmousedown="pressPadButton(NesJs.Joypad.BUTTONS.SELECT)"
+                onclick="releasePadButton(NesJs.Joypad.BUTTONS.SELECT)">SELECT</button></td>
+          <td><button id="pad1_3" onmousedown="pressPadButton(NesJs.Joypad.BUTTONS.START)"
+                onclick="releasePadButton(NesJs.Joypad.BUTTONS.START)">START</button></td>
+          <td><button id="pad1_1" onmousedown="pressPadButton(NesJs.Joypad.BUTTONS.B)"
+                onclick="releasePadButton(NesJs.Joypad.BUTTONS.B)">B</button></td>
+          <td><button id="pad1_0" onmousedown="pressPadButton(NesJs.Joypad.BUTTONS.A)"
+                onclick="releasePadButton(NesJs.Joypad.BUTTONS.A)">A</button></td>
+        </tr>
+      </table>
+    </div>
+
+    <p>
+      <div>
+        <button id="dumpROMButton" onclick="pushDumpROM()">dump ROM</button>
+        <button id="dumpRegButton" onclick="pushDumpReg()">dump CPU/PPU reg</button>
+        <button id="dumpRAMButton" onclick="pushDumpRAM()">dump CPU RAM</button>
+        <button id="dumpVRAMButton" onclick="pushDumpVRAM()">dump PPU VRAM</button>
+        <button id="dumpSPRRAMButton" onclick="pushDumpSPRRAM()">dump PPU SPRRAM</button>
+        <button id="stopButton" onclick="pushStopButton()">stop</button>
+        <button id="stepButton" onclick="pushStepButton()">step</button>
+        <button id="resumeButton" onclick="pushResumeButton()">resume</button>
+      </div>
+      <textarea id="dump" cols="128" rows="16" readonly="readonly"> </textarea>
+    </p>
+
+    <p>
+      Thanks for the public domain NES roms.
+    </p>
+    <ul>
+      <li><a href="http://pdroms.de/category/nintendoentertainmentsystem">http://pdroms.de/category/nintendoentertainmentsystem</a></li>
+      <li><a href="http://slydogstudios.org/index.php/1k-series/">http://slydogstudios.org/index.php/1k-series/</a></li>
+      <li><a href="http://www.mojontwins.com/juegos_mojonos/sgt-helmet-training-day-nes/">http://www.mojontwins.com/juegos_mojonos/sgt-helmet-training-day-nes/</a></li>
+    </ul>
+
+    <p>
+      <a href="https://github.com/takahirox/nes-js">Source code at GitHub</a>
+    </p>
+
+  </body>
 </html>
