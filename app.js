@@ -2,6 +2,11 @@
 // It initializes socket.io and a new express instance.
 // Start it by running 'node app.js' from your terminal.
 
+// Dependencies
+var http = require('http');
+var io = require('socket.io')
+var crypto = require('crypto');
+
 // Creating an express server
 
 var express = require('express'),
