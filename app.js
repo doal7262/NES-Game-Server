@@ -33,6 +33,9 @@ var secret = 'kittens';
 var socketCodes = {};
 
 // Initialize a new socket.io application
+app.get('/', function(req, res){
+    res.sendFile(__dirname + '/public/index.html');
+});
 
 // When a client connects...
 io.sockets.on('connection', function(socket) 
@@ -99,6 +102,7 @@ io.sockets.on('connection', function(socket)
    });
 });
 
+
 // When a client disconnects...
 io.sockets.on('disconnect', function(socket) 
 {
@@ -117,13 +121,6 @@ var presentation = io.on('connection', function (socket) {
     // emit a "granted" or "denied" message.
 
     socket.on('load', function(data){
-
-        
-        if(device.type == 'controller'){
-            socket.emit('connected', {});
-            socketCodes[device.gameCode]
-        }
-        
 
         socket.emit('access', {
             access: (data.key === secret ? "granted" : "denied")
