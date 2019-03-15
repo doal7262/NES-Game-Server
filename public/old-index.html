@@ -2,7 +2,6 @@
 
 <html>
 <head>
-	<!--
 	<meta charset="utf-8">
 
 	<title>Smartphone Remote Control for Presentations | Tutorialzine Demo</title>
@@ -17,57 +16,14 @@
 
 	<link rel="stylesheet" href="assets/revealjs/css/reveal.css">
 	<link rel="stylesheet" href="assets/revealjs/css/theme/black.css" id="theme">
-	-->
 
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>Embedding Example</title>
-	
-	<script type="text/javascript" src="https://unpkg.com/jsnes/dist/jsnes.min.js"></script>
-	<script type="text/javascript" src="nes-embed.js"></script>
-	<script>window.onload = function(){nes_load_url("nes-canvas", "InterglacticTransmissing.nes");}</script>
-
-	<!-- controller style test -->
-	<style>
-	#controller{
-		width: 100%;
-		height: 100%;
-		background: url('assets/img/nes-controller.jpg') repeat-x;
-		background-size:contain;
-	}
-	</style>
 
 </head>
 
 <body>
 
-		<div style="margin: auto; width: 75%;">
-			<canvas id="nes-canvas" width="256" height="240" style="width: 100%"/>
-		</div>
-		<p>DPad: Arrow keys<br/>Start: Return, Select: Tab<br/>A Button: A, B Button: S</p>
-
-	<div id="overlay"></div>
-	<div id="main"></div>
-  <div id="gameConnect" style="display:none">
-	 Please open up this page with your phone and enter code <span style="font-weight:bold" id="socketId"></span>
-  </div>
-  <div id="controller" style="display:none">
-	<div id="socket">
-	   <input type="text" name="socketId"/>
-	   <input type="button" id="connect" value="Connect"/>
-
-	</div>
-		<div id="wheel" style="display:none">
-		<div id="forward"></div>
-		<div id="stopRight"></div>
-		<div id="stopLeft"></div>
-		<div id="turnRight"></div>
-		<div id="turnLeft"></div>
-		</div>
-		<div id="status"></div>
- 	</div>
-
-
-	<!-- OLD CODE, CAN BE USED AGAIN FOR CORRECTNESS
 	<form class="login">
 		<span>What's your secret key?</span>
 		<input type="text" placeholder="Please enter your secret key!"/>
@@ -107,45 +63,6 @@
 
 	<!-- Phone Controller -->
 	<script src="assests/js/phoneController.js"></script>
-      
-	<script>
-		var SCREEN_WIDTH = window.innerWidth;
-		var SCREEN_HEIGHT = window.innerHeight;
-		var container, hudcontainer;
-		var hexGL;
-		function init() {
-			hudcontainer = document.getElementById("overlay");
-			container = document.getElementById("main");
-			hexGL = new bkcore.hexgl.HexGL({
-				document: document,
-				width: SCREEN_WIDTH,
-				height: SCREEN_HEIGHT,
-				container: container,
-				overlay: overlay,
-				quality: bkcore.Utils.getURLParameter('quality'),
-				difficulty: bkcore.Utils.getURLParameter('difficulty'),
-				half: bkcore.Utils.getURLParameter('half'),
-				track: 'Cityscape'
-			});
-			hexGL.load({
-				onLoad: function(){
-					console.log("ALL LOADED.");
-					hexGL.init();
-					hexGL.start();
-				},
-				onError: function(s){
-					console.log("ERROR ON "+s+".");
-				},
-				onProgress: function(p, t, n)
-				{
-					console.log("LOADED "+t+" : "+n+" ( "+p.loaded+" / "+p.total+" ).");
-				}
-			});
-		}
-	 
-					   
-	 initPhoneController();
-	</script>
 
 </body>
 </html>
