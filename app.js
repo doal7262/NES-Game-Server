@@ -25,7 +25,7 @@ var io = require('socket.io').listen(app.listen(port));
 // App Configuration
 
 // Make the files in the public folder available to the world
-// app.use(express.static(__dirname));
+app.use(express.static(__dirname));
 
 // This is a secret key that prevents others from opening your presentation
 // and controlling it. Change it to something that only you know.
