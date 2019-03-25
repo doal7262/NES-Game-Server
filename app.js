@@ -34,7 +34,7 @@ var socketCodes = {};
 
 // Initialize a new socket.io application
 app.get('/', function(req, res){
-    res.sendFile(__dirname + '/index.html');
+    res.sendFile(__dirname + '/public/index.html');
 });
 
 // usernames which are currently connected to the chat
