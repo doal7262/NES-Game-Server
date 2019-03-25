@@ -273,88 +273,86 @@ button[class*="btn"] {border: 0;}
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+	<script> 
+			var port = process.env.PORT || 8080;
+			var io = require('socket.io').listen(app.listen(port));
+			//var socket = io.connect('http://localhost:8080');
+	
+			// on connection to server, ask fo the user's name with anonymous callback
+			socket.on('connect', function(){
+				// call the server-side function 'adduser' and send one parameter (value of prompt)
+				socket.emit('adduser', prompt("What's your name?"));
+			});
+	
+			// listener, whenever the server emits 'updatechat', this updates the chat body
+			socket.on('updatechat', function (username, data) {
+				$('#conversation').append('<b>'+username + ':</b> ' + data + '<br>');
+			});
+	
+			// listener, whenever the server emits 'updaterooms', this updates the room the client is in
+			socket.on('updaterooms', function(rooms, current_room) {
+				$('#rooms').empty();
+				$.each(rooms, function(key, value) {
+					if(value == current_room){
+						$('#rooms').append('<div>' + value + '</div>');
+					}
+					else {
+						$('#rooms').append('<div><a href="#" onclick="switchRoom(\''+value+'\')">' + value + '</a></div>');
+					}
+				});
+			});
+	
+			function switchRoom(room){
+				socket.emit('switchRoom', room);
+			}
+	
+			// on load of page
+			$(function(){
+				// when the client clicks SEND
+				$('#datasend').click( function() {
+					var message = $('#data').val();
+					$('#data').val('');
+					// tell server to execute 'sendchat' and send along one parameter
+					socket.emit('sendchat', message);
+				});
+	
+				// when the client hits ENTER on their keyboard
+				$('#data').keypress(function(e) {
+					if(e.which == 13) {
+						$(this).blur();
+						$('#datasend').focus().click();
+					}
+				});
+			});
+	
+		</script>
+	<script  src="assets/js/homepage.js"></script>
+
 
 </head>
 
 <body>
 
-<div class="content">
-	<section>
-		<img src="assets/img/screen.png" alt="NES TV" width="100%" height="10%" class="centerImage">
-		<a href="nes-index.html" class="btn green block">Screen</a>
-		<img src="assets/img/nes-controller.png" alt="NES TV" width="100%" height="50%">
-		<a href="nes-controller.html" class="btn cyan block">Controller</a>
-		<a href="#" class="btn cyan block">Test</a>
+	<div class="content">
+		<section>
+			<img src="assets/img/screen.png" alt="NES TV" width="100%" height="10%" class="centerImage">
+			<a href="nes-index.html" class="btn green block">Screen</a>
+			<img src="assets/img/nes-controller.png" alt="NES TV" width="100%" height="50%">
+			<a href="nes-controller.html" class="btn cyan block">Controller</a>
+			<a href="#" class="btn cyan block">Test</a>
 
-		<script> 
-		var port = process.env.PORT || 8080;
-		var io = require('socket.io').listen(app.listen(port));
-		//var socket = io.connect('http://localhost:8080');
+			<div style="float:left;width:100px;border-right:1px solid black;height:300px;padding:10px;overflow:scroll-y;">
+				<b>ROOMS</b>
+				<div id="rooms"></div>
+			</div>
+			<div style="float:left;width:300px;height:250px;overflow:scroll-y;padding:10px;">
+				<div id="conversation"></div>
+				<input id="data" style="width:200px;" />
+				<input type="button" id="datasend" value="send" />
+			</div>
 
-		// on connection to server, ask fo the user's name with anonymous callback
-		socket.on('connect', function(){
-			// call the server-side function 'adduser' and send one parameter (value of prompt)
-			socket.emit('adduser', prompt("What's your name?"));
-		});
-
-		// listener, whenever the server emits 'updatechat', this updates the chat body
-		socket.on('updatechat', function (username, data) {
-			$('#conversation').append('<b>'+username + ':</b> ' + data + '<br>');
-		});
-
-		// listener, whenever the server emits 'updaterooms', this updates the room the client is in
-		socket.on('updaterooms', function(rooms, current_room) {
-			$('#rooms').empty();
-			$.each(rooms, function(key, value) {
-				if(value == current_room){
-					$('#rooms').append('<div>' + value + '</div>');
-				}
-				else {
-					$('#rooms').append('<div><a href="#" onclick="switchRoom(\''+value+'\')">' + value + '</a></div>');
-				}
-			});
-		});
-
-		function switchRoom(room){
-			socket.emit('switchRoom', room);
-		}
-
-		// on load of page
-		$(function(){
-			// when the client clicks SEND
-			$('#datasend').click( function() {
-				var message = $('#data').val();
-				$('#data').val('');
-				// tell server to execute 'sendchat' and send along one parameter
-				socket.emit('sendchat', message);
-			});
-
-			// when the client hits ENTER on their keyboard
-			$('#data').keypress(function(e) {
-				if(e.which == 13) {
-					$(this).blur();
-					$('#datasend').focus().click();
-				}
-			});
-		});
-
-		</script>
-		<div style="float:left;width:100px;border-right:1px solid black;height:300px;padding:10px;overflow:scroll-y;">
-			<b>ROOMS</b>
-			<div id="rooms"></div>
-		</div>
-		<div style="float:left;width:300px;height:250px;overflow:scroll-y;padding:10px;">
-			<div id="conversation"></div>
-			<input id="data" style="width:200px;" />
-			<input type="button" id="datasend" value="send" />
-		</div>
-
-	</section>
-</div>
-
-</div>
-  	<!--<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script> -->
-	<script  src="assets/js/homepage.js"></script>
+		</section>
+	</div>
 </body>
 
 </html>
