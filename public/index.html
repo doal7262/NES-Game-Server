@@ -288,8 +288,8 @@ button[class*="btn"] {border: 0;}
 
 		<script> 
 		var port = process.env.PORT || 8080;
-		//var io = require('socket.io').listen(app.listen(port));
-		var socket = io.connect('http://localhost:8080');
+		var io = require('socket.io').listen(app.listen(port));
+		//var socket = io.connect('http://localhost:8080');
 
 		// on connection to server, ask fo the user's name with anonymous callback
 		socket.on('connect', function(){
