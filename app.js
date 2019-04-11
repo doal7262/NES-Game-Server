@@ -4,9 +4,9 @@
 
 // Dependencies
 var http = require('http');
-var io = require('socket.io')
+var io = require('socket.io');
 var crypto = require('crypto');
-var server = http.createServer(app)
+var server = http.createServer(app);
 
 // Creating an express server
 
@@ -159,38 +159,5 @@ io.sockets.on('disconnect', function(socket)
       delete socketCodes[socket.gameCode];
    }
 });
-
-/* OLD CODE, STILL USEABLE UNTIL NEW VERSION WORKS
-
-var presentation = io.on('connection', function (socket) {
-
-    // A new client has come online. Check the secret key and 
-    // emit a "granted" or "denied" message.
-
-    socket.on('load', function(data){
-
-        socket.emit('access', {
-            access: (data.key === secret ? "granted" : "denied")
-        });
-
-    });
-
-    // Clients send the 'slide-changed' message whenever they navigate to a new slide.
-
-    socket.on('slide-changed', function(data){
-
-        // Check the secret key again
-
-        if(data.key === secret) {
-
-            // Tell all connected clients to navigate to the new slide
-
-            presentation.emit('navigate', {
-                hash: data.hash
-            });
-        }
-    });
-});
-*/
 
 console.log('Your presentation is running on http://localhost:' + port);
