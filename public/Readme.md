@@ -132,4 +132,6 @@ T.B.D.
 - VR/AR
   - [Three.js](https://github.com/mrdoob/three.js)
   - [jsartoolkit5](https://github.com/artoolkit/jsartoolkit5)
-- [SocketIO](https://github.com/socketio/socket.io)
+- Socket.IO
+  - [Website](http://socket.io/)
+  - [Github](https://github.com/socketio/socket.ioso)
