@@ -20,7 +20,7 @@ var port = process.env.PORT || 8080;
 // Initialize a new socket.io object. It is bound to 
 // the express app, which allows them to coexist.
 
-var io = require('socket.io').listen(app.listen(port));
+io = require('socket.io').listen(app.listen(port));
 
 // App Configuration
 
@@ -95,7 +95,7 @@ io.sockets.on('connection', function(socket)
    socket.on("device", function(device)
    {
       // if client is a browser game
-      if(device.type == "game")
+      if(device.type === "game")
       {
          // Generate a code
          var gameCode = crypto.randomBytes(3).toString('hex');
@@ -108,20 +108,20 @@ io.sockets.on('connection', function(socket)
          
          // Store game code -> socket association
          socketCodes[gameCode] = io.sockets.sockets[socket.id];
-         socket.gameCode = gameCode
+          socket.gameCode = gameCode;
          
          // Tell game client to initialize 
          //  and show the game code to the user
          socket.emit("initialize", gameCode);
       }
       // if client is a phone controller
-      else if(device.type == "controller")
+      else if(device.type === "controller")
       {
          // if game code is valid...
          if(device.gameCode in socketCodes)
          {
             // save the game code for controller commands
-            socket.gameCode = device.gameCode
+             socket.gameCode = device.gameCode;
 
             // initialize the controller
             socket.emit("connected", {});

@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.156
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "NES-Game-Server", "NES-Game-Server.njsproj", "{69F806FB-5C30-465E-A269-95BF3D9EE6FF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{69F806FB-5C30-465E-A269-95BF3D9EE6FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69F806FB-5C30-465E-A269-95BF3D9EE6FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69F806FB-5C30-465E-A269-95BF3D9EE6FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69F806FB-5C30-465E-A269-95BF3D9EE6FF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9D595723-77E7-41AB-A1BA-FE13AEBF0D69}
+	EndGlobalSection
+EndGlobal
