@@ -1,182 +1,181 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <PropertyGroup>
-        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-        <SchemaVersion>2.0</SchemaVersion>
-        <ProjectGuid>{69f806fb-5c30-465e-a269-95bf3d9ee6ff}</ProjectGuid>
-        <ProjectHome>.</ProjectHome>
-        <ProjectView>ShowAllFiles</ProjectView>
-        <StartupFile>app.js</StartupFile>
-        <WorkingDirectory>.</WorkingDirectory>
-        <OutputPath>.</OutputPath>
-        <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
-        <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">14.0</VisualStudioVersion>
-        <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
-    <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
-    <ItemGroup>
-        <Content Include="package-lock.json" />
-        <Content Include="package.json" />
-        <Content Include="README.md" />
-        <Content Include="app.js" />
-        <Content Include="public\index.html" />
-        <Content Include="public\nes-controller.html" />
-        <Content Include="public\nes-index.html" />
-        <Content Include="public\testRoom.html" />
-        <Content Include="public\package-lock.json" />
-        <Content Include="public\package.json" />
-        <Content Include="public\Readme.md" />
-        <Content Include="public\index.js" />
-        <Content Include="public\build\nes.js" />
-        <Content Include="public\build\nes.min.js" />
-        <Content Include="public\roms\Readme.txt" />
-        <Content Include="public\src\Apu.js" />
-        <Content Include="public\src\Audio.js" />
-        <Content Include="public\src\Cpu.js" />
-        <Content Include="public\src\Display.js" />
-        <Content Include="public\src\Joypad.js" />
-        <Content Include="public\src\Mapper.js" />
-        <Content Include="public\src\Memory.js" />
-        <Content Include="public\src\Nes.js" />
-        <Content Include="public\src\Ppu.js" />
-        <Content Include="public\src\Register.js" />
-        <Content Include="public\src\Rom.js" />
-        <Content Include="public\src\Utility.js" />
-        <Content Include="public\assets\css\homepage-style.css" />
-        <Content Include="public\assets\css\styles.css" />
-        <Content Include="public\assets\img\nes-controller.png" />
-        <Content Include="public\assets\img\screen.png" />
-        <Content Include="public\assets\img\1.jpg" />
-        <Content Include="public\assets\img\2.jpg" />
-        <Content Include="public\assets\img\3.jpg" />
-        <Content Include="public\assets\img\4.jpg" />
-        <Content Include="public\assets\img\5.jpg" />
-        <Content Include="public\assets\img\6.jpg" />
-        <Content Include="public\assets\img\7.jpg" />
-        <Content Include="public\assets\js\homepage.js" />
-        <Content Include="public\assets\js\phoneController.js" />
-        <Content Include="public\assets\js\script.js" />
-        <Content Include="public\assets\revealjs\css\reveal.css" />
-        <Content Include="public\assets\revealjs\js\reveal.js" />
-        <Content Include="public\assets\revealjs\css\theme\beige.css" />
-        <Content Include="public\assets\revealjs\css\theme\black.css" />
-        <Content Include="public\assets\revealjs\css\theme\blood.css" />
-        <Content Include="public\assets\revealjs\css\theme\league.css" />
-        <Content Include="public\assets\revealjs\css\theme\moon.css" />
-        <Content Include="public\assets\revealjs\css\theme\night.css" />
-        <Content Include="public\assets\revealjs\css\theme\serif.css" />
-        <Content Include="public\assets\revealjs\css\theme\simple.css" />
-        <Content Include="public\assets\revealjs\css\theme\sky.css" />
-        <Content Include="public\assets\revealjs\css\theme\solarized.css" />
-        <Content Include="public\assets\revealjs\css\theme\white.css" />
-        <Content Include="public\assets\revealjs\css\theme\README.md" />
-        <Content Include="public\assets\revealjs\lib\css\zenburn.css" />
-        <Content Include="public\assets\revealjs\lib\js\classList.js" />
-        <Content Include="public\assets\revealjs\lib\js\head.min.js" />
-        <Content Include="public\assets\revealjs\lib\js\html5shiv.js" />
-        <Content Include="public\assets\revealjs\lib\font\league-gothic\league-gothic.css" />
-        <Content Include="public\assets\revealjs\lib\font\source-sans-pro\source-sans-pro.css" />
-        <Content Include="public\assets\revealjs\plugin\highlight\highlight.js" />
-        <Content Include="public\assets\revealjs\plugin\leap\leap.js" />
-        <Content Include="public\assets\revealjs\plugin\markdown\example.html" />
-        <Content Include="public\assets\revealjs\plugin\markdown\example.md" />
-        <Content Include="public\assets\revealjs\plugin\markdown\markdown.js" />
-        <Content Include="public\assets\revealjs\plugin\markdown\marked.js" />
-        <Content Include="public\assets\revealjs\plugin\math\math.js" />
-        <Content Include="public\assets\revealjs\plugin\multiplex\client.js" />
-        <Content Include="public\assets\revealjs\plugin\multiplex\index.js" />
-        <Content Include="public\assets\revealjs\plugin\multiplex\master.js" />
-        <Content Include="public\assets\revealjs\plugin\notes\notes.html" />
-        <Content Include="public\assets\revealjs\plugin\notes\notes.js" />
-        <Content Include="public\assets\revealjs\plugin\notes-server\notes.html" />
-        <Content Include="public\assets\revealjs\plugin\notes-server\client.js" />
-        <Content Include="public\assets\revealjs\plugin\notes-server\index.js" />
-        <Content Include="public\assets\revealjs\plugin\print-pdf\print-pdf.js" />
-        <Content Include="public\assets\revealjs\plugin\remotes\remotes.js" />
-        <Content Include="public\assets\revealjs\plugin\search\search.js" />
-        <Content Include="public\assets\revealjs\plugin\zoom-js\zoom.js" />
-    </ItemGroup>
-    <ItemGroup>
-        <Folder Include="NES-Game-Server" />
-        <Folder Include="NES-Game-Server\NES-Game-Server" />
-        <Folder Include="nesnes" />
-        <Folder Include="NES-TEST" />
-        <Folder Include="NES-TEST\jsnes" />
-        <Folder Include="public" />
-        <Folder Include="public\assets" />
-        <Folder Include="public\assets\css" />
-        <Folder Include="public\assets\img" />
-        <Folder Include="public\assets\img\ElDewritoUpdater" />
-        <Folder Include="public\assets\js" />
-        <Folder Include="public\assets\revealjs" />
-        <Folder Include="public\assets\revealjs\css" />
-        <Folder Include="public\assets\revealjs\css\theme" />
-        <Folder Include="public\assets\revealjs\css\theme\source" />
-        <Folder Include="public\assets\revealjs\css\theme\template" />
-        <Folder Include="public\assets\revealjs\js" />
-        <Folder Include="public\assets\revealjs\lib" />
-        <Folder Include="public\assets\revealjs\lib\css" />
-        <Folder Include="public\assets\revealjs\lib\font" />
-        <Folder Include="public\assets\revealjs\lib\font\league-gothic" />
-        <Folder Include="public\assets\revealjs\lib\font\source-sans-pro" />
-        <Folder Include="public\assets\revealjs\lib\js" />
-        <Folder Include="public\assets\revealjs\plugin" />
-        <Folder Include="public\assets\revealjs\plugin\highlight" />
-        <Folder Include="public\assets\revealjs\plugin\leap" />
-        <Folder Include="public\assets\revealjs\plugin\markdown" />
-        <Folder Include="public\assets\revealjs\plugin\math" />
-        <Folder Include="public\assets\revealjs\plugin\multiplex" />
-        <Folder Include="public\assets\revealjs\plugin\notes" />
-        <Folder Include="public\assets\revealjs\plugin\notes-server" />
-        <Folder Include="public\assets\revealjs\plugin\print-pdf" />
-        <Folder Include="public\assets\revealjs\plugin\remotes" />
-        <Folder Include="public\assets\revealjs\plugin\search" />
-        <Folder Include="public\assets\revealjs\plugin\zoom-js" />
-        <Folder Include="public\build" />
-        <Folder Include="public\roms" />
-        <Folder Include="public\src" />
-    </ItemGroup>
-    <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-    <!--Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them.-->
-    <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />
-    <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsTools.targets" />
-    <ProjectExtensions>
-        <VisualStudio>
-          <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
-            <WebProjectProperties>
-              <UseIIS>False</UseIIS>
-              <AutoAssignPort>True</AutoAssignPort>
-              <DevelopmentServerPort>0</DevelopmentServerPort>
-              <DevelopmentServerVPath>/</DevelopmentServerVPath>
-              <IISUrl>http://localhost:48022/</IISUrl>
-              <NTLMAuthentication>False</NTLMAuthentication>
-              <UseCustomServer>True</UseCustomServer>
-              <CustomServerUrl>http://localhost:1337</CustomServerUrl>
-              <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
-            </WebProjectProperties>
-          </FlavorProperties>
-          <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
-            <WebProjectProperties>
-              <StartPageUrl>
-              </StartPageUrl>
-              <StartAction>CurrentPage</StartAction>
-              <AspNetDebugging>True</AspNetDebugging>
-              <SilverlightDebugging>False</SilverlightDebugging>
-              <NativeDebugging>False</NativeDebugging>
-              <SQLDebugging>False</SQLDebugging>
-              <ExternalProgram>
-              </ExternalProgram>
-              <StartExternalURL>
-              </StartExternalURL>
-              <StartCmdLineArguments>
-              </StartCmdLineArguments>
-              <StartWorkingDirectory>
-              </StartWorkingDirectory>
-              <EnableENC>False</EnableENC>
-              <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
-            </WebProjectProperties>
-          </FlavorProperties>
-        </VisualStudio>
-    </ProjectExtensions>
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{69f806fb-5c30-465e-a269-95bf3d9ee6ff}</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
+    <ProjectView>ShowAllFiles</ProjectView>
+    <StartupFile>app.js</StartupFile>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">14.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <ItemGroup>
+    <Content Include="package-lock.json" />
+    <Content Include="package.json" />
+    <Content Include="README.md" />
+    <Content Include="app.js" />
+    <Content Include="public\index.html" />
+    <Content Include="public\nes-controller.html" />
+    <Content Include="public\nes-index.html" />
+    <Content Include="public\package-lock.json" />
+    <Content Include="public\package.json" />
+    <Content Include="public\Readme.md" />
+    <Content Include="public\index.js" />
+    <Content Include="public\build\nes.js" />
+    <Content Include="public\build\nes.min.js" />
+    <Content Include="public\roms\Readme.txt" />
+    <Content Include="public\src\Apu.js" />
+    <Content Include="public\src\Audio.js" />
+    <Content Include="public\src\Cpu.js" />
+    <Content Include="public\src\Display.js" />
+    <Content Include="public\src\Joypad.js" />
+    <Content Include="public\src\Mapper.js" />
+    <Content Include="public\src\Memory.js" />
+    <Content Include="public\src\Nes.js" />
+    <Content Include="public\src\Ppu.js" />
+    <Content Include="public\src\Register.js" />
+    <Content Include="public\src\Rom.js" />
+    <Content Include="public\src\Utility.js" />
+    <Content Include="public\assets\css\homepage-style.css" />
+    <Content Include="public\assets\css\styles.css" />
+    <Content Include="public\assets\img\nes-controller.png" />
+    <Content Include="public\assets\img\screen.png" />
+    <Content Include="public\assets\img\1.jpg" />
+    <Content Include="public\assets\img\2.jpg" />
+    <Content Include="public\assets\img\3.jpg" />
+    <Content Include="public\assets\img\4.jpg" />
+    <Content Include="public\assets\img\5.jpg" />
+    <Content Include="public\assets\img\6.jpg" />
+    <Content Include="public\assets\img\7.jpg" />
+    <Content Include="public\assets\js\homepage.js" />
+    <Content Include="public\assets\js\phoneController.js" />
+    <Content Include="public\assets\js\script.js" />
+    <Content Include="public\assets\revealjs\css\reveal.css" />
+    <Content Include="public\assets\revealjs\js\reveal.js" />
+    <Content Include="public\assets\revealjs\css\theme\beige.css" />
+    <Content Include="public\assets\revealjs\css\theme\black.css" />
+    <Content Include="public\assets\revealjs\css\theme\blood.css" />
+    <Content Include="public\assets\revealjs\css\theme\league.css" />
+    <Content Include="public\assets\revealjs\css\theme\moon.css" />
+    <Content Include="public\assets\revealjs\css\theme\night.css" />
+    <Content Include="public\assets\revealjs\css\theme\serif.css" />
+    <Content Include="public\assets\revealjs\css\theme\simple.css" />
+    <Content Include="public\assets\revealjs\css\theme\sky.css" />
+    <Content Include="public\assets\revealjs\css\theme\solarized.css" />
+    <Content Include="public\assets\revealjs\css\theme\white.css" />
+    <Content Include="public\assets\revealjs\css\theme\README.md" />
+    <Content Include="public\assets\revealjs\lib\css\zenburn.css" />
+    <Content Include="public\assets\revealjs\lib\js\classList.js" />
+    <Content Include="public\assets\revealjs\lib\js\head.min.js" />
+    <Content Include="public\assets\revealjs\lib\js\html5shiv.js" />
+    <Content Include="public\assets\revealjs\lib\font\league-gothic\league-gothic.css" />
+    <Content Include="public\assets\revealjs\lib\font\source-sans-pro\source-sans-pro.css" />
+    <Content Include="public\assets\revealjs\plugin\highlight\highlight.js" />
+    <Content Include="public\assets\revealjs\plugin\leap\leap.js" />
+    <Content Include="public\assets\revealjs\plugin\markdown\example.html" />
+    <Content Include="public\assets\revealjs\plugin\markdown\example.md" />
+    <Content Include="public\assets\revealjs\plugin\markdown\markdown.js" />
+    <Content Include="public\assets\revealjs\plugin\markdown\marked.js" />
+    <Content Include="public\assets\revealjs\plugin\math\math.js" />
+    <Content Include="public\assets\revealjs\plugin\multiplex\client.js" />
+    <Content Include="public\assets\revealjs\plugin\multiplex\index.js" />
+    <Content Include="public\assets\revealjs\plugin\multiplex\master.js" />
+    <Content Include="public\assets\revealjs\plugin\notes\notes.html" />
+    <Content Include="public\assets\revealjs\plugin\notes\notes.js" />
+    <Content Include="public\assets\revealjs\plugin\notes-server\notes.html" />
+    <Content Include="public\assets\revealjs\plugin\notes-server\client.js" />
+    <Content Include="public\assets\revealjs\plugin\notes-server\index.js" />
+    <Content Include="public\assets\revealjs\plugin\print-pdf\print-pdf.js" />
+    <Content Include="public\assets\revealjs\plugin\remotes\remotes.js" />
+    <Content Include="public\assets\revealjs\plugin\search\search.js" />
+    <Content Include="public\assets\revealjs\plugin\zoom-js\zoom.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="NES-Game-Server" />
+    <Folder Include="NES-Game-Server\NES-Game-Server" />
+    <Folder Include="nesnes" />
+    <Folder Include="NES-TEST" />
+    <Folder Include="NES-TEST\jsnes" />
+    <Folder Include="public" />
+    <Folder Include="public\assets" />
+    <Folder Include="public\assets\css" />
+    <Folder Include="public\assets\img" />
+    <Folder Include="public\assets\img\ElDewritoUpdater" />
+    <Folder Include="public\assets\js" />
+    <Folder Include="public\assets\revealjs" />
+    <Folder Include="public\assets\revealjs\css" />
+    <Folder Include="public\assets\revealjs\css\theme" />
+    <Folder Include="public\assets\revealjs\css\theme\source" />
+    <Folder Include="public\assets\revealjs\css\theme\template" />
+    <Folder Include="public\assets\revealjs\js" />
+    <Folder Include="public\assets\revealjs\lib" />
+    <Folder Include="public\assets\revealjs\lib\css" />
+    <Folder Include="public\assets\revealjs\lib\font" />
+    <Folder Include="public\assets\revealjs\lib\font\league-gothic" />
+    <Folder Include="public\assets\revealjs\lib\font\source-sans-pro" />
+    <Folder Include="public\assets\revealjs\lib\js" />
+    <Folder Include="public\assets\revealjs\plugin" />
+    <Folder Include="public\assets\revealjs\plugin\highlight" />
+    <Folder Include="public\assets\revealjs\plugin\leap" />
+    <Folder Include="public\assets\revealjs\plugin\markdown" />
+    <Folder Include="public\assets\revealjs\plugin\math" />
+    <Folder Include="public\assets\revealjs\plugin\multiplex" />
+    <Folder Include="public\assets\revealjs\plugin\notes" />
+    <Folder Include="public\assets\revealjs\plugin\notes-server" />
+    <Folder Include="public\assets\revealjs\plugin\print-pdf" />
+    <Folder Include="public\assets\revealjs\plugin\remotes" />
+    <Folder Include="public\assets\revealjs\plugin\search" />
+    <Folder Include="public\assets\revealjs\plugin\zoom-js" />
+    <Folder Include="public\build" />
+    <Folder Include="public\roms" />
+    <Folder Include="public\src" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <!--Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them.-->
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />
+  <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsTools.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:48022/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://localhost:1337</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
+        <WebProjectProperties>
+          <StartPageUrl>
+          </StartPageUrl>
+          <StartAction>CurrentPage</StartAction>
+          <AspNetDebugging>True</AspNetDebugging>
+          <SilverlightDebugging>False</SilverlightDebugging>
+          <NativeDebugging>False</NativeDebugging>
+          <SQLDebugging>False</SQLDebugging>
+          <ExternalProgram>
+          </ExternalProgram>
+          <StartExternalURL>
+          </StartExternalURL>
+          <StartCmdLineArguments>
+          </StartCmdLineArguments>
+          <StartWorkingDirectory>
+          </StartWorkingDirectory>
+          <EnableENC>False</EnableENC>
+          <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

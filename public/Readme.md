@@ -134,4 +134,4 @@ T.B.D.
   - [jsartoolkit5](https://github.com/artoolkit/jsartoolkit5)
 - Socket.IO
   - [Website](http://socket.io/)
-  - [Github](https://github.com/socketio/socket.ioso)
+  - [Github](https://github.com/socketio/socket.io)
