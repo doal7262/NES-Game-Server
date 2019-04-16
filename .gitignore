@@ -8,6 +8,7 @@
 *.user
 *.userosscache
 *.sln.docstates
+*.sln
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
@@ -234,6 +235,7 @@ FakesAssemblies/
 
 # Node.js Tools for Visual Studio
 .njsproj
+.njsproj.user
 .ntvs_analysis.dat
 node_modules/
 
