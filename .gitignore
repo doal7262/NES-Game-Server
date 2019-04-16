@@ -234,8 +234,8 @@ FakesAssemblies/
 *.GhostDoc.xml
 
 # Node.js Tools for Visual Studio
-.njsproj
-.njsproj.user
+*.njsproj
+*.njsproj.user
 .ntvs_analysis.dat
 node_modules/
 
