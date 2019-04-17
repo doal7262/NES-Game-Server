@@ -4,28 +4,36 @@
 
 // Dependencies
 var http = require('http');
-var io = require('socket.io');
+var socket = require('socket.io');
 var crypto = require('crypto');
-var server = http.createServer(app);
 
 // Creating an express server
 
-var express = require('express'),
-    app = express();
+var express = require('express');
 
 // This is needed if the app is run on heroku and other cloud providers:
 
 var port = process.env.PORT || 8080;
 
-// Initialize a new socket.io object. It is bound to 
-// the express app, which allows them to coexist.
-
-io = require('socket.io').listen(app.listen(port));
-
-// App Configuration
+// App setup
+var app = express();
+var server = app.listen(port, function(){
+   console.log('listen to requests on port 8080');
+});
 
 // Make the files in the public folder available to the world
 app.use(express.static(__dirname + '/public/'));
+
+// Socket setup
+var io = socket(server);
+
+io.on('connection', function(socket){
+   console.log('made socket connection', socket.id); // Can view connections made in cmd line
+
+   socket.on('chat', function(data){
+      io.sockets.emit('chat', data);
+   });
+});
 
 // This is a secret key that prevents others from opening your presentation
 // and controlling it. Change it to something that only you know.

@@ -19,6 +19,12 @@ body {
 
 /* -- Header styles -- */
 
+#chat-window{
+	height: 1px;
+    /*overflow: auto;*/
+    background: #f9f9f9;
+}
+
 
 .homebanner {
 	display: none;

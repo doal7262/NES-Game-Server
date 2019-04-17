@@ -24,5 +24,7 @@
     "socket.io": "^2.2.0",
     "yarn": "^1.12.3"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "nodemon": "^1.18.11"
+  }
 }

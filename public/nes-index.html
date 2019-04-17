@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
+      
+    <title>Doug is Gay</title><!--don't delete, this is important-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.dev.js"></script>
+    <script src="./chat.js"></script>
+    <link href="./assets/css/styles.css" rel="stylesheet"></link>
     <script type="text/javascript" src="build/nes.js"></script>
     <script type="text/javascript">
       var nes;
@@ -308,10 +313,9 @@
               background-size:contain;
            }
       </style>
-
+    </div>
   </head>
   <body onload="init()">
-    </div>
     <div id="controller" style="display:none">
        <div id="socket">
           <input type="text" name="socketId"/>
@@ -397,9 +401,19 @@
         <button id="stepButton" onclick="pushStepButton()">step</button>
         <button id="resumeButton" onclick="pushResumeButton()">resume</button>
       </div>
-      <textarea id="dump" cols="128" rows="16" readonly="readonly"> </textarea>
+      
+      <div id="chat-room">
+        <textarea id="dump" cols="64" rows="16" readonly="readonly"> </textarea> <!--this will be the chat window-->
+        <textarea id="chat-dump" cols="64" rows="16" readonly="readonly"> </textarea>
+        <div id="chat-window">
+          <div id="output"></div>
+        </div>
+          <input id="character-name" type="text" placeholder="Character Name"/>
+          <input id="message" type="text" placeholder="Message"/>
+          <button id="send">Send</button>        
+      </div>
     </p>
-
+    
     <p>
       Thanks for the public domain NES roms.
     </p>
