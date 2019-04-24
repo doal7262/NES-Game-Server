@@ -9,16 +9,19 @@ var message = document.getElementById('message'),
     output = document.getElementById('chat-dump');
 
 // Emit Events
+
+
 try {
     btn.addEventListener('click'), function(){
         socket.emit('chat', {
             message: message.value,
             character_name: character_name.value
         });
-    });
+    };
 } catch (error) {
-    console.log('something broke');
+    console.log("give doug anxiety");
 }
+
 
 // Listen for events
 socket.on('chat', function(data){
