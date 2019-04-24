@@ -1,5 +1,5 @@
 // Make Connection
-var socket = io.connect('http://localhost:8080/nes-index.html');
+var socket = io.connect('http://localhost:8080/');
 console.log('testing to make sure we reach this page');
 
 // Query DOM
@@ -11,7 +11,7 @@ var message = document.getElementById('message'),
 // Emit Events
 
 
-try {
+/* try {
     btn.addEventListener('click'), function(){
         socket.emit('chat', {
             message: message.value,
@@ -20,7 +20,14 @@ try {
     };
 } catch (error) {
     console.log("give doug anxiety");
-}
+} */
+
+btn.addEventListener('click'), function(){
+    socket.emit('chat', {
+        message: message.value,
+        character_name: character_name.value
+    });
+};
 
 
 // Listen for events

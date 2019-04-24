@@ -35,7 +35,7 @@ io.on('connection', function(socket){
    });
 });
 
-// This is a secret key that prevents others from opening your presentation
+/* // This is a secret key that prevents others from opening your presentation
 // and controlling it. Change it to something that only you know.
 
 var socketCodes = {};
@@ -168,4 +168,4 @@ io.sockets.on('disconnect', function(socket)
    }
 });
 
-console.log('Your presentation is running on http://localhost:' + port);
+console.log('Your presentation is running on http://localhost:' + port); */
