@@ -5,11 +5,8 @@
 // Dependencies
 var http = require('http');
 var io = require('socket.io');
-var crypto = require('crypto');
-var server = http.createServer(app);
 
 // Creating an express server
-
 var express = require('express'),
     app = express();
 
@@ -27,21 +24,17 @@ var io = require('socket.io').listen(app.listen(port));
 // Make the files in the public folder available to the world
 app.use(express.static(__dirname + '/public/'));
 
-// This is a secret key that prevents others from opening your presentation
-// and controlling it. Change it to something that only you know.
+// usernames which are currently connected to the chat
+var usernames = {};
 
-var socketCodes = {};
+// rooms which are currently available in chat
+var rooms = ['room1', 'room2', 'room3'];
 
 // Initialize a new socket.io application
 app.get('/', function(req, res){
     res.sendFile(__dirname + '/public/index.html');
 });
 
-// usernames which are currently connected to the chat
-var usernames = {};
-
-// rooms which are currently available in chat
-var rooms = ['room1', 'room2', 'room3'];
 
 // When a client connects...
 io.sockets.on('connection', function(socket)
@@ -90,63 +83,6 @@ io.sockets.on('connection', function(socket)
         socket.room = newroom;
         socket.emit('updaterooms', rooms, newroom);
     });
-    
-   // Receive the client device type
-   socket.on("device", function(device)
-   {
-      // if client is a browser game
-      if(device.type == "game")
-      {
-         // Generate a code
-         var gameCode = crypto.randomBytes(3).toString('hex');
-         
-         // Ensure uniqueness
-         while(gameCode in socketCodes)
-         {
-            gameCode = crypto.randomBytes(3).toString('hex');
-         }
-         
-         // Store game code -> socket association
-         socketCodes[gameCode] = io.sockets.sockets[socket.id];
-         socket.gameCode = gameCode
-         
-         // Tell game client to initialize 
-         //  and show the game code to the user
-         socket.emit("initialize", gameCode);
-      }
-      // if client is a phone controller
-      else if(device.type == "controller")
-      {
-         // if game code is valid...
-         if(device.gameCode in socketCodes)
-         {
-            // save the game code for controller commands
-            socket.gameCode = device.gameCode
-
-            // initialize the controller
-            socket.emit("connected", {});
-            
-            // start the game
-            socketCodes[device.gameCode].emit("connected", {});
-         }
-         // else game code is invalid, 
-         //  send fail message and disconnect
-         else
-         {
-            socket.emit("fail", {});
-            socket.disconnect();
-         }
-      }
-   });
-   
-   // send turn command to game client
-   socket.on("turn", function(data)
-   {
-      if(socket.gameCode && socket.gameCode in socketCodes)
-      {
-         socketCodes[socket.gameCode].emit("turn", data.turn);
-      }
-   });
 });
 
 
