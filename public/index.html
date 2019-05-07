@@ -5,7 +5,293 @@
   <meta charset="UTF-8">
   <title>Cool Buttons</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,300italic' rel='stylesheet' type='text/css'>
-  
+  <!-- Ensure that everything scales appropriately on a mobile device -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+  <!-- Let's borrow a cool looking Font from Google -->
+  <link href='https://fonts.googleapis.com/css?family=Quicksand:300,400,700' rel='stylesheet' type='text/css'>
+
+  <link href="css/styles.css" rel="stylesheet">
+
+  <!-- NES Emulator Script -->
+  <script type="text/javascript" src="build/nes.js"></script>
+  <script type="text/javascript">
+  var nes;
+
+  // buttons status update methods
+
+  /**
+   *
+   */
+  function init() {
+    document.getElementById('loadROMButton').disabled = false;
+    document.getElementById('dumpROMButton').disabled = true;
+    document.getElementById('dumpRegButton').disabled = true;
+    document.getElementById('dumpRAMButton').disabled = true;
+    document.getElementById('dumpVRAMButton').disabled = true;
+    document.getElementById('dumpSPRRAMButton').disabled = true;
+    document.getElementById('stopButton').disabled = true;
+    document.getElementById('stepButton').disabled = true;
+    document.getElementById('resumeButton').disabled = true;
+  }
+
+  /**
+   *
+   */
+  function ROMloaded() {
+    document.getElementById('loadROMButton').disabled = true;
+    document.getElementById('dumpROMButton').disabled = true;
+    document.getElementById('dumpRegButton').disabled = true;
+    document.getElementById('dumpRAMButton').disabled = true;
+    document.getElementById('dumpVRAMButton').disabled = true;
+    document.getElementById('dumpSPRRAMButton').disabled = true;
+    document.getElementById('stopButton').disabled = true;
+    document.getElementById('stepButton').disabled = true;
+    document.getElementById('resumeButton').disabled = true;
+  }
+
+  /**
+   *
+   */
+  function NESran() {
+    document.getElementById('loadROMButton').disabled = true;
+    document.getElementById('dumpROMButton').disabled = true;
+    document.getElementById('dumpRegButton').disabled = true;
+    document.getElementById('dumpRAMButton').disabled = true;
+    document.getElementById('dumpVRAMButton').disabled = true;
+    document.getElementById('dumpSPRRAMButton').disabled = true;
+    document.getElementById('stopButton').disabled = false;
+    document.getElementById('stepButton').disabled = true;
+    document.getElementById('resumeButton').disabled = true;
+  }
+
+  /**
+   *
+   */
+  function NESstopped() {
+    document.getElementById('loadROMButton').disabled = true;
+    document.getElementById('dumpROMButton').disabled = false;
+    document.getElementById('dumpRegButton').disabled = false;
+    document.getElementById('dumpRAMButton').disabled = false;
+    document.getElementById('dumpVRAMButton').disabled = false;
+    document.getElementById('dumpSPRRAMButton').disabled = false;
+    document.getElementById('stopButton').disabled = true;
+    document.getElementById('stepButton').disabled = false;
+    document.getElementById('resumeButton').disabled = false;
+  }
+
+  // 
+
+  /**
+   *
+   */
+  function loadRom() {
+    var url = document.getElementById('romList').selectedOptions[0].value;
+
+    var request = new XMLHttpRequest();
+    request.responseType = 'arraybuffer';
+
+    request.onload = function() {
+      putMessage('Loading done.');
+      run(request.response);
+    };
+
+    request.onerror = function(e) {
+      putMessage('failed to load.');
+    };
+
+    request.open('GET', url, true);
+    request.send(null);
+
+    putMessage('')
+    putMessage('Loading rom image...')
+    ROMloaded();
+  }
+
+  /**
+   *
+   */
+  function run(buffer) {
+    try {
+      var rom = new NesJs.Rom(buffer);
+    } catch(e) {
+      putMessage('');
+      putMessage(e.toString());
+      return;
+    }
+
+    putMessage('');
+    putMessage('Rom Header info');
+    putMessage(rom.header.dump());
+
+    nes = new NesJs.Nes();
+
+    nes.addEventListener('fps', function(fps) {
+      document.getElementById('fps').innerText = fps.toFixed(2);
+    });
+
+    nes.setRom(rom);
+
+    nes.setDisplay(new NesJs.Display(document.getElementById('mainCanvas')));
+
+    try {
+      nes.setAudio(new NesJs.Audio());
+    } catch(e) {
+      putMessage('');
+      putMessage('Disables audio because this browser does not seems to support WebAudio.');
+    }
+
+    window.onkeydown = function(e) { nes.handleKeyDown(e); };
+    window.onkeyup = function(e) { nes.handleKeyUp(e); };
+
+    putMessage('');
+
+    putMessage('bootup.');
+    nes.bootup();
+
+    putMessage('runs.');
+    NESran();
+    nes.run();
+  }
+
+  // put message methods
+
+  /**
+   *
+   */
+  function putMessage(str) {
+    var area = document.getElementById('dump');
+    area.firstChild.appendData(str + '\n');
+    area.scrollTop = area.scrollHeight;
+  }
+
+  // push button handlers
+
+  /**
+   *
+   */
+  function pushDumpROM() {
+    putMessage(nes.dumpRom());
+  }
+
+  /**
+   *
+   */
+  function pushDumpReg() {
+    putMessage(nes.dumpCpu());
+    putMessage(nes.dumpPpu());
+  }
+
+  /**
+   *
+   */
+  function pushDumpRAM() {
+    putMessage(nes.dumpRam());
+  }
+
+  /**
+   *
+   */
+  function pushDumpVRAM() {
+    putMessage(nes.dumpVRam());
+  }
+
+  /**
+   *
+   */
+  function pushDumpSPRRAM() {
+    putMessage(nes.dumpSprRam());
+  }
+
+  /**
+   *
+   */
+  function pushStopButton() {
+    nes.stop();
+    putMessage('stopped.');
+    NESstopped();
+  }
+
+  /**
+   *
+   */
+  function pushStepButton() {
+    nes.runStep();
+    putMessage(nes.dumpCpu());
+  }
+
+  /**
+   *
+   */
+  function pushResumeButton() {
+    nes.resume();
+    putMessage('resumed.');
+    NESran();
+  }
+
+  // press/release pad button handlers
+
+  /**
+   *
+   */
+  function pressPadButton(key) {
+    if(nes === undefined)
+      return;
+
+    nes.pad1.pressButton(key);
+  }
+
+  /**
+   *
+   */
+  function releasePadButton(key) {
+    if(nes === undefined)
+      return;
+
+    nes.pad1.releaseButton(key);
+  }
+
+  // drag/drop handlers
+
+  /**
+   *
+   */
+  function dragOverHandler(e) {
+    e.preventDefault();
+  }
+
+  /**
+   *
+   */
+  function dropHandler(e) {
+    e.preventDefault();
+
+    var reader = new FileReader();
+
+    reader.onload = function(e) {
+      putMessage('Loading done.');
+      run(e.target.result);
+    };
+
+    reader.onerror = function(e) {
+      for(var key in reader.error) {
+        putMessage(key + '=' + reader.error[key]);
+      }
+    };
+
+    reader.readAsArrayBuffer(e.dataTransfer.files[0]);
+
+    putMessage('')
+    putMessage('Loading rom image...')
+  }
+
+  window.addEventListener('drop', dropHandler, false);
+  window.addEventListener('dragover', dragOverHandler, false);
+  </script>
+
+
+
+  <!-- CSS Styles -->
   
       <style>
       /* NOTE: The styles were added inline because Prefixfree needs access to your styles and they must be inlined if they are on local disk! */
@@ -270,20 +556,210 @@ button[class*="btn"] {border: 0;}
 .btn-gradient.green:active  {background: #72B08E;}
     </style>
 	<script src="/socket.io/socket.io.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 </head>
 
-<body>
+<body onload="init()">
+    <div id="gameArea">
+            <!-- This is where the templates defined below will be used -->
+    </div>
 
-	<div class="content">
-		<section>
-			<img src="assets/img/screen.png" alt="NES TV" width="100%" height="10%" class="centerImage">
-			<a href="nes-index.html" class="btn green block">Screen</a>
-			<img src="assets/img/nes-controller.png" alt="NES TV" width="100%" height="50%">
-			<a href="nes-controller.html" class="btn cyan block">Controller</a>
-			<!-- <a href="#" class="btn cyan block">Test</a> -->
-		</section>
-	</div>
+    <!-- Main Title Screen that appears when the page loads for the first time -->
+    <script id="intro-screen-template" type="text/template">
+
+        <div class="titleWrapper">
+
+            <div class="title">
+                NES-ONLINE
+            </div>
+
+            <div class="buttons">
+
+                <button id="btnCreateGame" class="btn left">CREATE</button>
+                <button id="btnJoinGame" class="btn right">JOIN</button>
+                <div style="clear:both"></div>
+            </div>
+
+        </div>
+
+    </script>
+
+    <!-- This screen appears when a user clicks "CREATE" on the Title Screen -->
+    <script id="create-game-template" type="text/template">
+        <div class="createGameWrapper">
+    
+            <div class="info">Open this site on your mobile device:</div>
+            <div id="gameURL" class="infoBig">Error!</div>
+    
+            <div class="info">Then click <strong>JOIN</strong> and <br/> enter the following Game ID:</div>
+            <div id="spanNewGameCode" class="gameId">Error!</div>
+    
+            <div id="playersWaiting"></div>
+        </div>
+    </script>
+
+    <!-- This scrreen appears when a player clicks "JOIN" on the Title Screen -->
+    <script id="join-game-template" type="text/template">
+        <div class="joinGameWrapper">
+            <div class="info">
+                <label for="inputPlayerName">Your Name:</label>
+                <input id="inputPlayerName" type="text" />
+            </div>
+
+            <div class="info">
+                <label for="inputGameId">Game ID:</label>
+                <input id="inputGameId" type="text"/>
+            </div>
+
+            <div class="info buttons">
+                <button id="btnStart" class="btn">Start</button>
+                <!--<div id="playerWaitingMessage"></div>-->
+                
+                <!-- NES Controller Code -->
+                <div id="controller" style="display:none">
+                        <div id="socket">
+                           <input type="text" name="socketId"/>
+                           <input type="button" id="connect" value="Connect"/>
+                 
+                        </div>
+                        <div id="wheel" style="display:none">
+                           <div id="forward"></div>
+                           <div id="stopRight"></div>
+                           <div id="stopLeft"></div>
+                           <div id="turnRight"></div>
+                           <div id="turnLeft"></div>
+                        </div>
+                        <div id="status"></div>
+                     </div>
+                </div>
+                
+            </div>
+        </div>
+    </script>
+
+    <!-- This is the 'Host' screen. It displays the word for each player to match -->
+    <script id="host-game-template" type="text/template">
+        <!-- Old code for the game
+        <div id="wordArea">
+            <div id="hostWord">5</div>
+        </div>
+        -->
+
+        <div id="controller" style="display:none">
+                <div id="socket">
+                   <input type="text" name="socketId"/>
+                   <input type="button" id="connect" value="Connect"/>
+         
+                </div>
+                <div id="wheel" style="display:none">
+                   <div id="forward"></div>
+                   <div id="stopRight"></div>
+                   <div id="stopLeft"></div>
+                   <div id="turnRight"></div>
+                   <div id="turnLeft"></div>
+                </div>
+                <div id="status"></div>
+             </div>
+         
+             <p>
+               <select id="romList">
+                 <option value="./roms/nestest.nes">nestest</option>
+                 <option value="./roms/Sgt. Helmet - Training Day (2013)(The Mojon Twins)[!].nes" selected>Sgt. Helmet</option>
+                 <option value="./roms/pong1k.nes">pong1k</option>
+                 <option value="./roms/The Invasion.nes">The Invasion</option>
+                 <option value="./roms/mguard.nes">mguard</option>
+               </select>
+               <button id="loadROMButton" onclick="loadRom()">load rom</button><br />
+               Select rom from the list or drag and drop your own rom into this window to start.
+             </p>
+         
+             <p>
+               <canvas id="mainCanvas" width="256" height="240"
+                       style="border:1px solid black; width:512px; height:480px;"></canvas>
+               <span id="fps"></span> fps
+             </p>
+         
+             <div>
+               <table>
+                 <tr>
+                   <td></td>
+                   <td><button id="pad1_4" onmousedown="pressPadButton(NesJs.Joypad.BUTTONS.UP)"
+                         onclick="releasePadButton(NesJs.Joypad.BUTTONS.UP)">U</button></td>
+                   <td></td>
+                   <td></td>
+                   <td></td>
+                   <td></td>
+                   <td></td>
+                 </tr>
+                 <tr>
+                   <td><button id="pad1_6" onmousedown="pressPadButton(NesJs.Joypad.BUTTONS.LEFT)"
+                         onclick="releasePadButton(NesJs.Joypad.BUTTONS.LEFT)">L</button></td>
+                   <td></td>
+                   <td><button id="pad1_7" onmousedown="pressPadButton(NesJs.Joypad.BUTTONS.RIGHT)"
+                         onclick="releasePadButton(NesJs.Joypad.BUTTONS.RIGHT)">R</button></td>
+                   <td></td>
+                   <td></td>
+                   <td></td>
+                   <td></td>
+                 </tr>
+                 <tr>
+                   <td></td>
+                   <td><button id="pad1_5" onmousedown="pressPadButton(NesJs.Joypad.BUTTONS.DOWN)"
+                         onclick="releasePadButton(NesJs.Joypad.BUTTONS.DOWN)">D</button></td>
+                   <td></td>
+                   <td><button id="pad1_2" onmousedown="pressPadButton(NesJs.Joypad.BUTTONS.SELECT)"
+                         onclick="releasePadButton(NesJs.Joypad.BUTTONS.SELECT)">SELECT</button></td>
+                   <td><button id="pad1_3" onmousedown="pressPadButton(NesJs.Joypad.BUTTONS.START)"
+                         onclick="releasePadButton(NesJs.Joypad.BUTTONS.START)">START</button></td>
+                   <td><button id="pad1_1" onmousedown="pressPadButton(NesJs.Joypad.BUTTONS.B)"
+                         onclick="releasePadButton(NesJs.Joypad.BUTTONS.B)">B</button></td>
+                   <td><button id="pad1_0" onmousedown="pressPadButton(NesJs.Joypad.BUTTONS.A)"
+                         onclick="releasePadButton(NesJs.Joypad.BUTTONS.A)">A</button></td>
+                 </tr>
+               </table>
+        </div>
+
+        <p>
+            <div>
+                <button id="dumpROMButton" onclick="pushDumpROM()">dump ROM</button>
+                <button id="dumpRegButton" onclick="pushDumpReg()">dump CPU/PPU reg</button>
+                <button id="dumpRAMButton" onclick="pushDumpRAM()">dump CPU RAM</button>
+                <button id="dumpVRAMButton" onclick="pushDumpVRAM()">dump PPU VRAM</button>
+                <button id="dumpSPRRAMButton" onclick="pushDumpSPRRAM()">dump PPU SPRRAM</button>
+                <button id="stopButton" onclick="pushStopButton()">stop</button>
+                <button id="stepButton" onclick="pushStepButton()">step</button>
+                <button id="resumeButton" onclick="pushResumeButton()">resume</button>
+            </div>
+            <textarea id="dump" cols="128" rows="16" readonly="readonly"> </textarea>
+        </p>
+          
+              
+
+        <!-- Player Scores, not really nescesary
+        <div id="playerScores">
+            <div id="player1Score" class="playerScore">
+                <span class="score">0</span><span class="playerName">Player 1</span>
+            </div>
+            <div id="player2Score" class="playerScore">
+                <span class="playerName">Player 2</span><span class="score">0</span>
+            </div>
+        </div>
+        -->
+    </script>
+
+    <!-- JavaScript Libraries -->
+
+    <!-- nes_app.js is where all the client-side NES game logic -->
+    <script src="nes_app.js"></script>
+
+    <!-- TextFit resizes text to fill a container.
+        It's used so the titles and game words fit properly on any size screen.
+        https://github.com/STRML/textFit   -->
+        <script src="libs/textFit.min.js"></script>
+
+    <!-- FastClick is used to eliminate the 300ms delay when clicking items on a mobile device
+        https://github.com/ftlabs/fastclick -->
+    <script src="libs/fastclick.js"></script>
 </body>
 
 </html>

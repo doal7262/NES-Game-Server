@@ -22,7 +22,7 @@
     "jsnes": "file:NES-TEST/jsnes",
     "nesnes": "file:nesnes",
     "socket.io": "^2.2.0",
-    "yarn": "^1.12.3"
+    "yarn": "^1.15.2"
   },
   "devDependencies": {}
 }
